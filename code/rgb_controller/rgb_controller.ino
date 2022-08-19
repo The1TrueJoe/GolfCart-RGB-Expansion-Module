@@ -106,7 +106,7 @@ void can_interrupt() {
                 break;
 
             case 2: // Blink LEDs
-                blink(rx_msg.data[2]);
+                blink(rx_msg.data[2],rx_msg.data[3]);
                 break;
 
             case 3: // Run rgb light show
@@ -118,9 +118,7 @@ void can_interrupt() {
                 break;
             
         }
-        
     }
-
 }
 
 // Report the LED load to the CAN bus
@@ -238,13 +236,12 @@ void rgb_light_show() {
                 set_static_states(2, r, g, b);
                 set_static_states(3, r, g, b);
 
-
                 // Wait .1 second
                 delay(100);
+
             }
         }
     }
-    
 }
 
 // Method to set static states
@@ -268,20 +265,67 @@ void set_static_states(int controller, byte r, byte g, byte b) {
             break;
         default:
             break;
+
     }
 }
 
-
-// Function to blink the LEDs n times
+// Function to blink each controller n times
 void blink(int n) {
+    // Blink the LED controller n times
     for (int i = 0; i < n; i++) {
-        digitalWrite(LED_CONTROLLER_1_R, HIGH);
-        digitalWrite(LED_CONTROLLER_1_G, HIGH);
-        digitalWrite(LED_CONTROLLER_1_B, HIGH);
-        delay(500);
-        digitalWrite(LED_CONTROLLER_1_R, LOW);
-        digitalWrite(LED_CONTROLLER_1_G, LOW);
-        digitalWrite(LED_CONTROLLER_1_B, LOW);
-        delay(500);
+        // Set the LED controller to on
+        set_led_controller(1, HIGH);
+        set_led_controller(2, HIGH);
+        set_led_controller(3, HIGH);
+
+        // Wait .1 second
+        delay(100);
+
+        // Set the LED controller to off
+        set_led_controller(1, LOW);
+        set_led_controller(2, LOW);
+        set_led_controller(3, LOW);
+
+    }
+}
+
+// Function to blink x led controller n times
+void blink(int controller, int n) {
+    // Blink the LED controller n times
+    for (int i = 0; i < n; i++) {
+        // Set the LED controller to on
+        set_led_controller(controller, HIGH);
+
+        // Wait .1 second
+        delay(100);
+
+        // Set the LED controller to off
+        set_led_controller(controller, LOW);
+
+    }
+}
+
+// Function to set the led controller on or off
+void set_led_controller(int controller, int state) {
+    // Set the LED controller to on
+    switch (controller) {
+        case 1:
+            digitalWrite(LED_CONTROLLER_1_R, state);
+            digitalWrite(LED_CONTROLLER_1_G, state);
+            digitalWrite(LED_CONTROLLER_1_B, state);
+            break;
+        case 2:
+            digitalWrite(LED_CONTROLLER_2_R, state);
+            digitalWrite(LED_CONTROLLER_2_G, state);
+            digitalWrite(LED_CONTROLLER_2_B, state);
+            break;
+        case 3:
+            digitalWrite(LED_CONTROLLER_3_R, state);
+            digitalWrite(LED_CONTROLLER_3_G, state);
+            digitalWrite(LED_CONTROLLER_3_B, state);
+            break;
+        default:
+            break;
+
     }
 }
