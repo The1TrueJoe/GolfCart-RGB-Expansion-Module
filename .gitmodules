@@ -1,0 +1,3 @@
+[submodule "code/lib/arduino-mcp2515"]
+	path = code/lib/arduino-mcp2515
+	url = https://github.com/GSSM-AutoGolfCart/arduino-mcp2515
