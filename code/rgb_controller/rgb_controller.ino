@@ -144,8 +144,8 @@ void report_led_load() {
     
     // Set the data bytes
     tx_msg.data[1] = 0xFF;
-    tx_msg.data[2] = led_load >> 8;
-    tx_msg.data[3] = led_load;
+    tx_msg.data[6] = led_load >> 8;
+    tx_msg.data[7] = led_load;
     
     // Send the CAN message
     can.write(tx_msg);
