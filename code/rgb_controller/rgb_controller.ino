@@ -110,11 +110,15 @@ void can_interrupt() {
                 break;
 
             case 3: // Run rgb light show
-                run_rgb_light_show();
+                rgb_light_show();
                 break;
 
             case 4: // Report the load measure
                 report_led_load();
+                break;
+
+            case 5: // Report the current states of the LEDs
+                report_values();
                 break;
             
         }
